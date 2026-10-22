@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tracker Cop</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="card">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo-group">
+        <span class="cop-emoji-icon">👮</span>
+        <div>
+          <h1 class="title">Tracker Cop</h1>
+          <p class="subtitle">Autonomous Anti-Tracking Guard</p>
+        </div>
+      </div>
+      <div class="toggle-container">
+        <label class="switch" title="Toggle Active Guard">
+          <input type="checkbox" id="masterToggle" checked>
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </header>
+
+    <!-- Status Banner -->
+    <div id="statusBanner" class="status-banner banner-active">
+      <span class="status-indicator"></span>
+      <span id="statusText">POLICE PATROL ACTIVE</span>
+    </div>
+
+    <!-- Active Domain Security Badge -->
+    <div class="domain-card">
+      <div class="domain-info">
+        <span class="domain-label">Current Site:</span>
+        <span id="currentDomain" class="domain-name">Detecting...</span>
+      </div>
+      <div id="riskBadge" class="risk-badge risk-low">GUARDED</div>
+      <button id="whitelistBtn" class="btn btn-secondary btn-sm">Whitelist Site</button>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="stats-grid">
+      <div class="stat-box">
+        <span class="stat-number" id="statBlocked">0</span>
+        <span class="stat-label">Trackers Blocked</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-number" id="statPoisoned">0</span>
+        <span class="stat-label">Cookies Poisoned</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-number" id="statStealth">0</span>
+        <span class="stat-label">Stealth Detected</span>
+      </div>
+    </div>
+
+    <!-- Poison Configuration Quick Select -->
+    <div class="control-group">
+      <label for="poisonModeSelect" class="control-label">Poison Dummy Payload:</label>
+      <select id="poisonModeSelect" class="select-input">
+        <option value="sarcastic">Sarcastic ("Try getting a job...")</option>
+        <option value="gibberish">Gibberish Decoy Hash</option>
+        <option value="decoy_profile">Decoy User Telemetry Profile</option>
+        <option value="custom">Custom Payload</option>
+      </select>
+    </div>
+
+    <!-- Live Log Snippet -->
+    <div class="log-section">
+      <div class="log-header">
+        <span>Recent Activity</span>
+        <a href="#" id="openOptionsBtn" class="link-btn">Full Logs</a>
+      </div>
+      <div id="recentLogs" class="log-list">
+        <div class="log-item empty">Scanning active tab for digital footprints...</div>
+      </div>
+    </div>
+
+    <!-- Footer Actions -->
+    <footer class="footer">
+      <button id="emailReportBtn" class="btn btn-primary btn-full">
+        📧 Send Email Security Report
+      </button>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

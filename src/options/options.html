@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tracker Cop - Command Center & Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo-title">
+        <span class="cop-emoji-logo">👮</span>
+        <div>
+          <h1>Tracker Cop Command Center</h1>
+          <p class="subtitle">Configuration, Payload Customization & Email Security Audit Reports</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+      <button class="tab-btn active" data-tab="email-report">📧 Email Security Report</button>
+      <button class="tab-btn" data-tab="settings">⚙️ Defensive Settings</button>
+      <button class="tab-btn" data-tab="whitelists">🛡️ Whitelisted Domains</button>
+      <button class="tab-btn" data-tab="audit-logs">📜 Real-Time Incident Logs</button>
+    </nav>
+
+    <!-- Tab 1: Email Security Report -->
+    <section id="email-report" class="tab-content active">
+      <div class="card">
+        <h2>Defensive Security & Tracker Audit Report</h2>
+        <p class="desc">Generate and preview complete security telemetry reports with number of tracers found, sites located, cookies poisoned, websites protected, and recommended actions.</p>
+
+        <div class="report-actions">
+          <button id="generateReportBtn" class="btn btn-primary">🔄 Refresh Report Data</button>
+          <button id="launchMailtoBtn" class="btn btn-accent">📧 Open in Default Email Client</button>
+          <button id="copyReportBtn" class="btn btn-secondary">📋 Copy Report to Clipboard</button>
+        </div>
+
+        <div id="copyNotification" class="toast hidden">Report copied to clipboard!</div>
+
+        <div class="report-preview-container">
+          <label class="control-label">Report Preview:</label>
+          <textarea id="reportTextArea" readonly class="report-textarea"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 2: Settings -->
+    <section id="settings" class="tab-content">
+      <div class="card">
+        <h2>Poison Payload & Alert Configuration</h2>
+
+        <div class="form-group">
+          <label class="control-label" for="optPoisonMode">Default Poison Mode:</label>
+          <select id="optPoisonMode" class="form-control">
+            <option value="sarcastic">Sarcastic Messages ("Instead of tracking try getting a job it pays bills!")</option>
+            <option value="gibberish">Gibberish Decoy Hashes</option>
+            <option value="decoy_profile">Decoy User Telemetry Profile (Fake location, age, interests)</option>
+            <option value="custom">Custom Poison Message</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label" for="optCustomMsg">Custom Poison Message Payload:</label>
+          <input type="text" id="optCustomMsg" class="form-control" placeholder="Enter custom dummy message to feed trackers...">
+          <small class="help-text">This value will be injected directly into tracking cookies and payload responses when custom mode is selected.</small>
+        </div>
+
+        <div class="form-group flex-group">
+          <div>
+            <label class="control-label" for="optNotifications">Desktop Notifications:</label>
+            <p class="help-text">Receive real-time alerts when stealth/masked digital fingerprinting is detected.</p>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="optNotifications" checked>
+            <span class="slider round"></span>
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <button id="saveSettingsBtn" class="btn btn-primary">Save Settings</button>
+          <span id="saveStatus" class="save-status"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 3: Whitelists -->
+    <section id="whitelists" class="tab-content">
+      <div class="card">
+        <h2>Whitelisted Domains</h2>
+        <p class="desc">Websites on this list will bypass tracker blocking and cookie poisoning.</p>
+
+        <div class="add-whitelist-row">
+          <input type="text" id="newDomainInput" class="form-control" placeholder="e.g. example.com">
+          <button id="addDomainBtn" class="btn btn-primary">Add Domain</button>
+        </div>
+
+        <div id="whitelistItems" class="whitelist-list">
+          <!-- Whitelist items populated dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 4: Audit Logs -->
+    <section id="audit-logs" class="tab-content">
+      <div class="card">
+        <div class="flex-between">
+          <h2>Incident & Digital Footprint Audit Log</h2>
+          <button id="clearLogsBtn" class="btn btn-danger btn-sm">Clear Logs</button>
+        </div>
+        <p class="desc">Full history of blocked trackers, poisoned surveillance cookies, and intercepted stealth fingerprinting attempts.</p>
+
+        <div class="table-container">
+          <table class="logs-table">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Type</th>
+                <th>Domain</th>
+                <th>Risk Level</th>
+                <th>Details</th>
+              </tr>
+            </thead>
+            <tbody id="logsTableBody">
+              <!-- Logs populated dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>
