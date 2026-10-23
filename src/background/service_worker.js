@@ -148,17 +148,23 @@ chrome.cookies.onChanged.addListener(async (changeInfo) => {
     const cookieUrl = `${protocol}//${cookie.domain.replace(/^\./, '')}${cookie.path}`;
 
     try {
-      await chrome.cookies.set({
+      const cookieSetDetails = {
         url: cookieUrl,
         name: cookie.name,
         value: dummyValue,
-        domain: cookie.domain,
         path: cookie.path,
         secure: cookie.secure,
         httpOnly: cookie.httpOnly,
         sameSite: cookie.sameSite,
         expirationDate: cookie.expirationDate
-      });
+      };
+
+      // Only set domain parameter if it's not a host-only cookie to prevent API errors
+      if (!cookie.hostOnly && cookie.domain) {
+        cookieSetDetails.domain = cookie.domain;
+      }
+
+      await chrome.cookies.set(cookieSetDetails);
 
       // Update stats
       const stats = store.stats || { totalBlocked: 0, cookiesPoisoned: 0, stealthDetected: 0, sitesProtectedCount: 0 };

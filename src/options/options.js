@@ -160,8 +160,16 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   addDomainBtn.addEventListener('click', () => {
-    const domain = newDomainInput.value.trim().toLowerCase();
+    let domain = newDomainInput.value.trim().toLowerCase();
     if (!domain) return;
+    // Strip http:// or https:// or leading slashes if user pasted full URL
+    try {
+      if (domain.startsWith('http://') || domain.startsWith('https://')) {
+        domain = new URL(domain).hostname;
+      }
+    } catch (e) {}
+    domain = domain.replace(/^\/+|\/+$/g, '');
+
     chrome.runtime.sendMessage({ type: 'TOGGLE_WHITELIST_DOMAIN', domain }, () => {
       newDomainInput.value = '';
       loadData();

@@ -122,12 +122,13 @@
             const trackerPatterns = ['_ga', '_gid', '_fbp', '_fbc', '_hj', 'criteo', 'segment', '_mixpanel', 'pixel'];
             if (trackerPatterns.some(p => lowerVal.includes(p))) {
               notifyStealthDetection('Script Cookie Tracking', `Script attempted setting tracking cookie: ${val.split(';')[0]}`, 'HIGH');
-              // Append decoy sarcastic message inside tracking cookie value
-              const parts = val.split('=');
-              if (parts.length >= 2) {
-                const name = parts[0].trim();
-                const rest = parts.slice(1).join('=');
-                val = `${name}=POLICE_DECIPHERED_FAKE_Instead_of_tracking_try_getting_a_job_it_pays_bills; ${rest}`;
+              // Replace value with decoy sarcastic message while preserving original cookie attributes
+              const cookieParts = val.split(';');
+              const keyVal = cookieParts[0].split('=');
+              if (keyVal.length >= 2) {
+                const cookieName = keyVal[0].trim();
+                const attributes = cookieParts.slice(1).join(';');
+                val = `${cookieName}=POLICE_DECIPHERED_FAKE_Instead_of_tracking_try_getting_a_job_it_pays_bills${attributes ? ';' + attributes : ''}`;
               }
             }
           }
