@@ -62,7 +62,7 @@
     <path d="M 277 220 Q 272 215 382 215 L 372 270 Q 327 295 282 270 Z" fill="url(#glassGrad)" stroke="#111" stroke-width="6" stroke-linejoin="round" />
     <!-- Lens Reflection Highlights -->
     <path d="M 145 225 L 205 225 L 180 250 L 145 250 Z" fill="#FFFFFF" opacity="0.25" />
-    <path d="M 292 225 L 352 225 L 327 250 L 292 250 Z" fill="#FFFFFF" opacity="0.25" opacity="0.25" />
+    <path d="M 292 225 L 352 225 L 327 250 L 292 250 Z" fill="#FFFFFF" opacity="0.25" />
   </g>
 
   <!-- BEARD AND MUSTACHE -->

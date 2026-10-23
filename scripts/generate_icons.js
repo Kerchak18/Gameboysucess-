@@ -66,7 +66,7 @@ const svgIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" w
     <path d="M 277 220 Q 272 215 382 215 L 372 270 Q 327 295 282 270 Z" fill="url(#glassGrad)" stroke="#111" stroke-width="6" stroke-linejoin="round" />
     <!-- Lens Reflection Highlights -->
     <path d="M 145 225 L 205 225 L 180 250 L 145 250 Z" fill="#FFFFFF" opacity="0.25" />
-    <path d="M 292 225 L 352 225 L 327 250 L 292 250 Z" fill="#FFFFFF" opacity="0.25" opacity="0.25" />
+    <path d="M 292 225 L 352 225 L 327 250 L 292 250 Z" fill="#FFFFFF" opacity="0.25" />
   </g>
 
   <!-- BEARD AND MUSTACHE -->
@@ -132,22 +132,26 @@ async function generatePNGs() {
   const browser = await chromium.launch();
   const page = await browser.newPage();
 
-  const svgDataUrl = `data:image/svg+xml;utf8,${encodeURIComponent(svgIcon)}`;
-
   const sizes = [16, 32, 48, 128, 512];
   for (const size of sizes) {
     await page.setViewportSize({ width: size, height: size });
     await page.setContent(`
       <!DOCTYPE html>
       <html>
-        <body style="margin:0; padding:0; background:transparent; overflow:hidden;">
-          <img src="${svgDataUrl}" width="${size}" height="${size}" style="display:block;" />
+        <head>
+          <style>
+            html, body { margin: 0; padding: 0; background: transparent; overflow: hidden; width: ${size}px; height: ${size}px; }
+            svg { width: ${size}px; height: ${size}px; display: block; }
+          </style>
+        </head>
+        <body>
+          ${svgIcon.trim()}
         </body>
       </html>
     `);
     const pngBuffer = await page.screenshot({ omitBackground: true, type: 'png' });
     fs.writeFileSync(path.join(iconsDir, `icon${size}.png`), pngBuffer);
-    console.log(`Generated icon${size}.png`);
+    console.log(`Generated icon${size}.png (${pngBuffer.length} bytes)`);
   }
 
   await browser.close();

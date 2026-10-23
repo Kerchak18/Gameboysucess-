@@ -30,9 +30,9 @@ body {
   gap: 16px;
 }
 
-.cop-emoji-logo {
-  font-size: 52px;
-  line-height: 1;
+.logo {
+  width: 64px;
+  height: 64px;
 }
 
 h1 {

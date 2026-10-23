@@ -33,9 +33,9 @@ body {
   gap: 10px;
 }
 
-.cop-emoji-icon {
-  font-size: 32px;
-  line-height: 1;
+.cop-logo {
+  width: 42px;
+  height: 42px;
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
 }
 
