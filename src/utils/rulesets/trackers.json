@@ -1,20 +1,26 @@
 [
   {
     "id": 1,
-    "priority": 1,
-    "action": { "type": "block" },
+    "priority": 2,
+    "action": {
+      "type": "redirect",
+      "redirect": { "extensionPath": "/src/utils/cdn_stub.js" }
+    },
     "condition": {
       "urlFilter": "||google-analytics.com/analytics.js",
-      "resourceTypes": ["script", "xmlhttprequest", "ping", "image"]
+      "resourceTypes": ["script"]
     }
   },
   {
     "id": 2,
-    "priority": 1,
-    "action": { "type": "block" },
+    "priority": 2,
+    "action": {
+      "type": "redirect",
+      "redirect": { "extensionPath": "/src/utils/cdn_stub.js" }
+    },
     "condition": {
-      "urlFilter": "||doubleclick.net",
-      "resourceTypes": ["script", "xmlhttprequest", "ping", "image", "sub_frame"]
+      "urlFilter": "||connect.facebook.net/*/fbevents.js",
+      "resourceTypes": ["script"]
     }
   },
   {
@@ -22,8 +28,8 @@
     "priority": 1,
     "action": { "type": "block" },
     "condition": {
-      "urlFilter": "||connect.facebook.net/en_US/fbevents.js",
-      "resourceTypes": ["script", "xmlhttprequest", "ping"]
+      "urlFilter": "||doubleclick.net",
+      "resourceTypes": ["script", "xmlhttprequest", "ping", "image", "sub_frame"]
     }
   },
   {
@@ -69,6 +75,24 @@
     "condition": {
       "urlFilter": "||scorecardresearch.com",
       "resourceTypes": ["script", "xmlhttprequest", "image"]
+    }
+  },
+  {
+    "id": 9,
+    "priority": 2,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "cname-tracker.",
+      "resourceTypes": ["script", "xmlhttprequest", "image", "ping"]
+    }
+  },
+  {
+    "id": 10,
+    "priority": 2,
+    "action": { "type": "block" },
+    "condition": {
+      "urlFilter": "metrics.",
+      "resourceTypes": ["script", "xmlhttprequest", "ping"]
     }
   }
 ]

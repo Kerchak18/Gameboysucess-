@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const reportTextArea = document.getElementById('reportTextArea');
   const generateReportBtn = document.getElementById('generateReportBtn');
   const launchMailtoBtn = document.getElementById('launchMailtoBtn');
+  const downloadJsonReportBtn = document.getElementById('downloadJsonReportBtn');
   const copyReportBtn = document.getElementById('copyReportBtn');
   const copyNotification = document.getElementById('copyNotification');
 
@@ -131,6 +132,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (currentMailtoUrl) {
       window.open(currentMailtoUrl, '_blank');
     }
+  });
+
+  downloadJsonReportBtn.addEventListener('click', () => {
+    chrome.runtime.sendMessage({ type: 'GET_STATUS' }, (res) => {
+      if (!res || !res.success || !res.data) return;
+      const jsonStr = JSON.stringify(res.data, null, 2);
+      const blob = new Blob([jsonStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `tracker_cop_audit_report_${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    });
   });
 
   copyReportBtn.addEventListener('click', () => {

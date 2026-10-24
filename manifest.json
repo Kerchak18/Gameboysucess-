@@ -34,7 +34,8 @@
     "alarms",
     "webNavigation",
     "activeTab",
-    "scripting"
+    "scripting",
+    "privacy"
   ],
   "host_permissions": [
     "<all_urls>"
@@ -49,7 +50,7 @@
   ],
   "web_accessible_resources": [
     {
-      "resources": ["src/content/injected_poison.js", "icons/*"],
+      "resources": ["src/content/injected_poison.js", "src/utils/cdn_stub.js", "icons/*", "assets/*"],
       "matches": ["<all_urls>"]
     }
   ],

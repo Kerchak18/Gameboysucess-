@@ -14,10 +14,14 @@ function runManifestTests() {
   assert.strictEqual(manifest.name, 'Tracker Cop & Cookie Poisoner');
 
   // Check required permissions
-  const requiredPermissions = ['storage', 'declarativeNetRequest', 'cookies', 'notifications', 'alarms', 'scripting'];
+  const requiredPermissions = ['storage', 'declarativeNetRequest', 'cookies', 'notifications', 'alarms', 'scripting', 'privacy'];
   requiredPermissions.forEach(perm => {
     assert.strictEqual(manifest.permissions.includes(perm), true, `Permission ${perm} must be present`);
   });
+
+  // Check cdn_stub.js
+  const stubPath = path.join(__dirname, '..', 'src', 'utils', 'cdn_stub.js');
+  assert.strictEqual(fs.existsSync(stubPath), true, 'cdn_stub.js should exist');
 
   // Check icons existence
   const iconSizes = ['16', '32', '48', '128'];

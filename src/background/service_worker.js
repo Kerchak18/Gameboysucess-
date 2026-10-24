@@ -61,6 +61,18 @@ chrome.runtime.onInstalled.addListener(async (details) => {
 
   await chrome.storage.local.set(mergedSettings);
 
+  // Configure WebRTC Leak Protection via privacy API
+  if (chrome.privacy && chrome.privacy.network && chrome.privacy.network.webRTCIPHandlingPolicy) {
+    try {
+      chrome.privacy.network.webRTCIPHandlingPolicy.set({
+        value: 'disable_non_proxied_udp'
+      });
+      console.log('[Tracker Cop] WebRTC IP handling policy set to disable_non_proxied_udp.');
+    } catch (e) {
+      console.warn('[Tracker Cop] WebRTC IP policy setting error:', e);
+    }
+  }
+
   // Setup periodic health & audit alarm
   chrome.alarms.create('trackerCopAuditAlarm', { periodInMinutes: 15 });
 });

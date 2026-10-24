@@ -75,6 +75,29 @@
     };
   }
 
+  // 2.5 WEBRTC LEAK PROTECTION & CANDIDATE SPOOFING IN DOM
+  if (window.RTCPeerConnection || window.webkitRTCPeerConnection) {
+    const OriginalRTC = window.RTCPeerConnection || window.webkitRTCPeerConnection;
+    const ShieldedRTC = function(config, constraints) {
+      notifyStealthDetection('WebRTC IP Leak Attempt', 'Intercepted RTCPeerConnection creation attempt', 'HIGH');
+      const pc = new OriginalRTC(config, constraints);
+
+      const origCreateOffer = pc.createOffer;
+      pc.createOffer = function() {
+        return origCreateOffer.apply(this, arguments).then(offer => {
+          // Strip local candidate lines from SDP offer to block local IP leak
+          if (offer && offer.sdp) {
+            offer.sdp = offer.sdp.replace(/a=candidate:.*\r\n/g, '');
+          }
+          return offer;
+        });
+      };
+      return pc;
+    };
+    ShieldedRTC.prototype = OriginalRTC.prototype;
+    window.RTCPeerConnection = ShieldedRTC;
+  }
+
   // 3. NAVIGATOR & HARDWARE SPOOFING
   try {
     Object.defineProperty(navigator, 'hardwareConcurrency', {

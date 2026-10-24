@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const poisonModeSelect = document.getElementById('poisonModeSelect');
   const recentLogsContainer = document.getElementById('recentLogs');
   const emailReportBtn = document.getElementById('emailReportBtn');
+  const exportJsonBtn = document.getElementById('exportJsonBtn');
   const openOptionsBtn = document.getElementById('openOptionsBtn');
 
   let activeTabDomain = '';
@@ -140,9 +141,24 @@ document.addEventListener('DOMContentLoaded', async () => {
   emailReportBtn.addEventListener('click', async () => {
     chrome.runtime.sendMessage({ type: 'GENERATE_EMAIL_REPORT' }, (res) => {
       if (res && res.success && res.report) {
-        // Open mailto link
+        // Copy text to clipboard and open mailto
+        navigator.clipboard.writeText(res.report.body).catch(() => {});
         window.open(res.report.mailtoUrl, '_blank');
       }
+    });
+  });
+
+  exportJsonBtn.addEventListener('click', async () => {
+    chrome.runtime.sendMessage({ type: 'GET_STATUS' }, (res) => {
+      if (!res || !res.success || !res.data) return;
+      const jsonStr = JSON.stringify(res.data, null, 2);
+      const blob = new Blob([jsonStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `tracker_cop_report_${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
     });
   });
 });
